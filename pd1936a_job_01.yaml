@@ -12,7 +12,7 @@ visibility: public
 
 metadata:
   source: https://github.com/MAY1994/lava-team-refactoring
-  path: pd1936a_01.yaml
+  path: pd1936a_job_01.yaml
 
 protocols:
   lava-lxc:
@@ -44,7 +44,7 @@ actions:
 - test:
     namespace: droid
     timeout:
-      minutes: 5
+      minutes: 10
     definitions:
     - repository: http://git.linaro.org/lava-team/lava-functional-tests.git
       from: git
@@ -54,7 +54,7 @@ actions:
 - test:
     namespace: tlxc
     timeout:
-      minutes: 5
+      minutes: 10
     definitions:
     - repository: https://git.linaro.org/lava-team/lava-functional-tests.git
       from: git
