@@ -1,0 +1,53 @@
+device_type: pd1936a
+job_name: PD1936a health check
+timeouts:
+  job:
+    minutes: 60
+  action:
+    minutes: 40
+  connection:
+    minutes: 2
+priority: medium
+visibility: public
+reboot_to_fastboot: false
+
+metadata:
+  source: https://github.com/MAY1994/lava-team-refactoring 
+  path: health-checks/pd1936a.yaml
+
+protocols:
+  lava-lxc:
+    name: lxc-pixel-test
+    template: debian
+    distribution: debian
+    release: buster
+    mirror: http://ftp.uk.debian.org/debian/
+    security_mirror: http://mirror.csclub.uwaterloo.ca/debian-security/
+
+actions:
+- deploy:
+    namespace: tlxc
+    timeout:
+      minutes: 5
+    to: lxc
+    packages:
+    - android-tools-adb
+    - android-tools-fastboot
+
+- boot:
+    namespace: tlxc
+    prompts:
+    - 'root@(.*):/#'
+    timeout:
+      minutes: 5
+    method: lxc
+
+- test:
+    namespace: tlxc
+    timeout:
+      minutes: 5
+    definitions:
+    - repository: https://git.linaro.org/lava-team/lava-functional-tests.git
+      from: git
+      path: lava-test-shell/android/get-adb-serial.yaml
+      name: get-pixel-serial
